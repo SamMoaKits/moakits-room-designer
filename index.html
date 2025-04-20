@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MoaKits Room Designer</title>
-  <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>MoaKits 2.5D Room Designer</h1>
+  <header>
+    <h1>MoaKits 2.5D Room Designer</h1>
+  </header>
 
-  <div id="container">
-    <div id="sidebar">
-      <h3>Furniture</h3>
+  <main id="layout">
+    <aside id="sidebar">
+      <h3>🪑 Furniture</h3>
       <button onclick="addItemToCanvas('assets/furniture/bed.png')">🛏 Add Bed</button>
       <button onclick="addItemToCanvas('assets/furniture/lamp.png')">💡 Add Lamp</button>
       <button onclick="addItemToCanvas('assets/furniture/rug.png')">🧶 Add Rug</button>
-    </div>
+    </aside>
 
-    <div id="canvas-wrapper">
+    <section id="canvas-area">
       <canvas id="room-canvas" width="1000" height="600"></canvas>
-    </div>
-  </div>
 
-  <div id="controls">
-    <label>🎨 Wall Color:
-      <input type="color" id="wall-color" value="#d3c6ae">
-    </label>
-    <label>🪵 Floor Color:
-      <input type="color" id="floor-color" value="#e9e3d5">
-    </label>
-  </div>
+      <div id="controls">
+        <label>🎨 Wall Color:
+          <input type="color" id="wall-color" value="#d3c6ae" />
+        </label>
+        <label>🪵 Floor Color:
+          <input type="color" id="floor-color" value="#e9e3d5" />
+        </label>
+        <div id="rotate-controls">
+          <button onclick="rotateSelected(-15)">⟲</button>
+          <button onclick="rotateSelected(15)">⟳</button>
+        </div>
+      </div>
 
-  <div id="rotate-controls">
-    <button onclick="rotateSelected(-15)">⟲ Rotate Left</button>
-    <button onclick="rotateSelected(15)">⟳ Rotate Right</button>
-  </div>
-
-  <div id="actions">
-    <button id="save-png">📸 Save as Image</button>
-    <button id="save-json">💾 Export as JSON</button>
-    <input type="file" id="load-json" accept=".json">
-  </div>
+      <div id="actions">
+        <button id="save-png">📸 Save as Image</button>
+        <button id="save-json">💾 Export as JSON</button>
+        <input type="file" id="load-json" accept=".json" />
+      </div>
+    </section>
+  </main>
 
   <script src="app.js"></script>
 </body>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MoaKits Room Designer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+</head>
+<body>
+  <h1>MoaKits 2.5D Room Designer</h1>
+  <div id="container">
+    <div id="sidebar">
+      <h3>Furniture</h3>
+      <img src="assets/furniture/bed.png" class="item" data-item="bed" alt="Bed">
+      <img src="assets/furniture/lamp.png" class="item" data-item="lamp" alt="Lamp">
+      <img src="assets/furniture/rug.png" class="item" data-item="rug" alt="Rug">
+    </div>
+
+    <div id="canvas-wrapper">
+      <canvas id="room-canvas" width="1000" height="600"></canvas>
+    </div>
+  </div>
+
+  <div id="actions">
+    <button id="save-png">📸 Save as Image</button>
+    <button id="save-json">💾 Export as JSON</button>
+    <input type="file" id="load-json" accept=".json">
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

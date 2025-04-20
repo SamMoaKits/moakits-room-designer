@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f9f6f1;
+  padding: 40px;
+  margin: 0;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#sidebar {
+  width: 120px;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  height: 600px;
+  overflow-y: auto;
+}
+
+#sidebar h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+#sidebar img.item {
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: grab;
+  border: 1px solid transparent;
+  transition: border 0.2s ease;
+}
+
+#sidebar img.item:hover {
+  border: 1px solid #aaa;
+}
+
+#canvas-wrapper {
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 👇 New Export Buttons */
+#actions {
+  margin-top: 30px;
+}
+
+#actions button,
+#actions input[type="file"] {
+  padding: 10px 15px;
+  margin: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#actions button:hover {
+  background-color: #eee;
+}

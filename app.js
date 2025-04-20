@@ -4,18 +4,41 @@ const canvas = new fabric.Canvas('room-canvas', {
   preserveObjectStacking: true,
 });
 
-// Add room background (floor)
-const room = new fabric.Rect({
-  left: 0,
-  top: 0,
-  fill: '#f2f2f2',
-  width: 1000,
-  height: 600,
+// Room structure
+const floor = new fabric.Rect({
+  left: 100,
+  top: 150,
+  width: 800,
+  height: 400,
+  fill: '#e9e3d5',
   selectable: false
 });
-canvas.add(room);
 
-// 🪑 Furniture buttons logic
+const leftWall = new fabric.Rect({
+  left: 100,
+  top: 50,
+  width: 150,
+  height: 400,
+  fill: '#d3c6ae',
+  angle: -10,
+  selectable: false
+});
+
+const rightWall = new fabric.Rect({
+  left: 750,
+  top: 50,
+  width: 150,
+  height: 400,
+  fill: '#d3c6ae',
+  angle: 10,
+  selectable: false
+});
+
+canvas.add(floor);
+canvas.add(leftWall);
+canvas.add(rightWall);
+
+// Add furniture
 window.addItemToCanvas = function (imgPath) {
   fabric.Image.fromURL(imgPath, function (img) {
     img.set({
@@ -29,29 +52,39 @@ window.addItemToCanvas = function (imgPath) {
       selectable: true,
     });
     canvas.add(img);
-  });
+  }, { crossOrigin: 'anonymous' }); // Important for PNG export in Wix!
 };
 
-// 🔁 Rotate selected item with "R" key
-document.addEventListener('keydown', function (e) {
+// Rotate selected item
+window.rotateSelected = function (angle) {
   const active = canvas.getActiveObject();
-  if (!active) return;
-
-  if (e.key === 'r' || e.key === 'R') {
-    active.rotate((active.angle || 0) + 15);
+  if (active && active !== floor && active !== leftWall && active !== rightWall) {
+    active.rotate((active.angle || 0) + angle);
     canvas.requestRenderAll();
   }
+};
+
+// Wall/floor color controls
+document.getElementById('wall-color').addEventListener('input', (e) => {
+  leftWall.set({ fill: e.target.value });
+  rightWall.set({ fill: e.target.value });
+  canvas.requestRenderAll();
 });
 
-// 🗑️ Double-click to delete any object
+document.getElementById('floor-color').addEventListener('input', (e) => {
+  floor.set({ fill: e.target.value });
+  canvas.requestRenderAll();
+});
+
+// Delete on double-click
 canvas.on('mouse:dblclick', function (e) {
   const obj = e.target;
-  if (obj && obj !== room) {
+  if (obj && obj !== floor && obj !== leftWall && obj !== rightWall) {
     canvas.remove(obj);
   }
 });
 
-// 📐 Snap to 50x50 grid when moving
+// Snap to 50px grid
 canvas.on('object:moving', function (e) {
   const obj = e.target;
   obj.set({
@@ -60,22 +93,26 @@ canvas.on('object:moving', function (e) {
   });
 });
 
-// 📸 Save canvas as PNG image
+// Save as image (FIXED for Wix!)
 document.getElementById('save-png').addEventListener('click', function () {
-  const dataURL = canvas.toDataURL({
-    format: 'png',
-    quality: 1,
-  });
+  try {
+    const dataURL = canvas.toDataURL({
+      format: 'png',
+      quality: 1
+    });
 
-  const link = document.createElement('a');
-  link.download = 'moakits-room.png';
-  link.href = dataURL;
-  link.click();
+    const link = document.createElement('a');
+    link.download = 'moakits-room.png';
+    link.href = dataURL;
+    link.click();
+  } catch (err) {
+    alert('⚠️ Export failed. Make sure all images are loaded from the same origin.');
+  }
 });
 
-// 💾 Export canvas as JSON
+// Save as JSON
 document.getElementById('save-json').addEventListener('click', function () {
-  const json = JSON.stringify(canvas.toJSON());
+  const json = JSON.stringify(canvas.toJSON(['selectable', 'angle', 'scaleX', 'scaleY']));
   const blob = new Blob([json], { type: 'application/json' });
   const link = document.createElement('a');
   link.download = 'moakits-room.json';
@@ -83,7 +120,7 @@ document.getElementById('save-json').addEventListener('click', function () {
   link.click();
 });
 
-// 📂 Load JSON back into canvas
+// Load from JSON
 document.getElementById('load-json').addEventListener('change', function (e) {
   const file = e.target.files[0];
   if (!file) return;

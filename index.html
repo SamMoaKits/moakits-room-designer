@@ -22,6 +22,20 @@
     </div>
   </div>
 
+  <div id="controls">
+    <label>🎨 Wall Color:
+      <input type="color" id="wall-color" value="#d3c6ae">
+    </label>
+    <label>🪵 Floor Color:
+      <input type="color" id="floor-color" value="#e9e3d5">
+    </label>
+  </div>
+
+  <div id="rotate-controls">
+    <button onclick="rotateSelected(-15)">⟲ Rotate Left</button>
+    <button onclick="rotateSelected(15)">⟳ Rotate Right</button>
+  </div>
+
   <div id="actions">
     <button id="save-png">📸 Save as Image</button>
     <button id="save-json">💾 Export as JSON</button>

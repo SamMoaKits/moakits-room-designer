@@ -1,10 +1,10 @@
-// Initialize canvas
+// Initialize Fabric canvas
 const canvas = new fabric.Canvas('room-canvas', {
   selection: true,
   preserveObjectStacking: true,
 });
 
-// Room layout
+// Room structure
 const floor = new fabric.Rect({
   left: 100,
   top: 150,
@@ -34,9 +34,11 @@ const rightWall = new fabric.Rect({
   selectable: false
 });
 
-canvas.add(floor, leftWall, rightWall);
+canvas.add(floor);
+canvas.add(leftWall);
+canvas.add(rightWall);
 
-// Add item function
+// Add furniture
 window.addItemToCanvas = function (imgPath) {
   fabric.Image.fromURL(imgPath, function (img) {
     img.set({
@@ -50,10 +52,10 @@ window.addItemToCanvas = function (imgPath) {
       selectable: true,
     });
     canvas.add(img);
-  }, { crossOrigin: 'anonymous' });
+  }, { crossOrigin: 'anonymous' }); // Important for PNG export in Wix!
 };
 
-// Rotate buttons
+// Rotate selected item
 window.rotateSelected = function (angle) {
   const active = canvas.getActiveObject();
   if (active && active !== floor && active !== leftWall && active !== rightWall) {
@@ -62,7 +64,7 @@ window.rotateSelected = function (angle) {
   }
 };
 
-// Wall/Floor color change
+// Wall/floor color controls
 document.getElementById('wall-color').addEventListener('input', (e) => {
   leftWall.set({ fill: e.target.value });
   rightWall.set({ fill: e.target.value });
@@ -74,7 +76,7 @@ document.getElementById('floor-color').addEventListener('input', (e) => {
   canvas.requestRenderAll();
 });
 
-// Double-click to delete
+// Delete on double-click
 canvas.on('mouse:dblclick', function (e) {
   const obj = e.target;
   if (obj && obj !== floor && obj !== leftWall && obj !== rightWall) {
@@ -82,7 +84,7 @@ canvas.on('mouse:dblclick', function (e) {
   }
 });
 
-// Snap to grid
+// Snap to 50px grid
 canvas.on('object:moving', function (e) {
   const obj = e.target;
   obj.set({
@@ -91,23 +93,24 @@ canvas.on('object:moving', function (e) {
   });
 });
 
-// Save PNG
+// Save as image (FIXED for Wix!)
 document.getElementById('save-png').addEventListener('click', function () {
   try {
     const dataURL = canvas.toDataURL({
       format: 'png',
       quality: 1
     });
+
     const link = document.createElement('a');
     link.download = 'moakits-room.png';
     link.href = dataURL;
     link.click();
   } catch (err) {
-    alert('⚠️ Export failed. Make sure all images are loaded locally.');
+    alert('⚠️ Export failed. Make sure all images are loaded from the same origin.');
   }
 });
 
-// Save JSON
+// Save as JSON
 document.getElementById('save-json').addEventListener('click', function () {
   const json = JSON.stringify(canvas.toJSON(['selectable', 'angle', 'scaleX', 'scaleY']));
   const blob = new Blob([json], { type: 'application/json' });
@@ -117,7 +120,7 @@ document.getElementById('save-json').addEventListener('click', function () {
   link.click();
 });
 
-// Load JSON
+// Load from JSON
 document.getElementById('load-json').addEventListener('change', function (e) {
   const file = e.target.files[0];
   if (!file) return;

@@ -5,65 +5,6 @@
   <title>MoaKits Room Designer</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f9f6ef;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-
-    #container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    #sidebar {
-      width: 160px;
-      background: #fff;
-      padding: 12px;
-      border-right: 1px solid #ddd;
-    }
-
-    .sidebar-item {
-      cursor: pointer;
-      border: 2px solid transparent;
-      padding: 4px;
-      margin-bottom: 12px;
-      transition: 0.2s;
-    }
-
-    .sidebar-item img {
-      width: 60px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .sidebar-item:hover {
-      border-color: #aaa;
-      background: #f4f4f4;
-      border-radius: 8px;
-    }
-
-    #canvas-wrapper {
-      flex-grow: 1;
-      background: #f0f0f0;
-    }
-
-    #controls,
-    #rotate-controls,
-    #actions {
-      margin-top: 20px;
-    }
-
-    canvas {
-      border: 1px solid #ccc;
-      background: #fff;
-    }
-  </style>
 </head>
 <body>
   <h1>MoaKits 2.5D Room Designer</h1>
@@ -71,18 +12,9 @@
   <div id="container">
     <div id="sidebar">
       <h3>Furniture</h3>
-
-      <div class="sidebar-item" onclick="addItemToCanvas('assets/furniture/bed.png')">
-        <img src="assets/furniture/bed.png" alt="Bed" />
-      </div>
-
-      <div class="sidebar-item" onclick="addItemToCanvas('assets/furniture/lamp.png')">
-        <img src="assets/furniture/lamp.png" alt="Lamp" />
-      </div>
-
-      <div class="sidebar-item" onclick="addItemToCanvas('assets/furniture/rug.png')">
-        <img src="assets/furniture/rug.png" alt="Rug" />
-      </div>
+      <button onclick="addItemToCanvas('assets/furniture/bed.png')">🛏 Add Bed</button>
+      <button onclick="addItemToCanvas('assets/furniture/lamp.png')">💡 Add Lamp</button>
+      <button onclick="addItemToCanvas('assets/furniture/rug.png')">🧶 Add Rug</button>
     </div>
 
     <div id="canvas-wrapper">
@@ -91,10 +23,12 @@
   </div>
 
   <div id="controls">
-    🎨 Wall Color:
-    <input type="color" id="wall-color" value="#d3c6ae">
-    🪵 Floor Color:
-    <input type="color" id="floor-color" value="#e9e3d5">
+    <label>🎨 Wall Color:
+      <input type="color" id="wall-color" value="#d3c6ae">
+    </label>
+    <label>🪵 Floor Color:
+      <input type="color" id="floor-color" value="#e9e3d5">
+    </label>
   </div>
 
   <div id="rotate-controls">

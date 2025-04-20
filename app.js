@@ -4,7 +4,7 @@ const canvas = new fabric.Canvas('room-canvas', {
   preserveObjectStacking: true,
 });
 
-// Optional: add room "floor" background
+// Add room background (floor)
 const room = new fabric.Rect({
   left: 0,
   top: 0,
@@ -15,32 +15,12 @@ const room = new fabric.Rect({
 });
 canvas.add(room);
 
-// Make images draggable from the sidebar
-document.querySelectorAll('.item').forEach(img => {
-  img.setAttribute('draggable', true);
-  img.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', e.target.getAttribute('src'));
-  });
-});
-
-// Handle drop on canvas-wrapper
-const canvasWrapper = document.getElementById('canvas-wrapper');
-
-canvasWrapper.addEventListener('dragover', function (e) {
-  e.preventDefault();
-});
-
-canvasWrapper.addEventListener('drop', function (e) {
-  e.preventDefault();
-  const imageUrl = e.dataTransfer.getData('text/plain');
-  const rect = canvasWrapper.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  fabric.Image.fromURL(imageUrl, function (img) {
+// 🪑 Furniture buttons logic
+window.addItemToCanvas = function (imgPath) {
+  fabric.Image.fromURL(imgPath, function (img) {
     img.set({
-      left: x,
-      top: y,
+      left: 200,
+      top: 200,
       scaleX: 0.5,
       scaleY: 0.5,
       angle: 0,
@@ -50,7 +30,7 @@ canvasWrapper.addEventListener('drop', function (e) {
     });
     canvas.add(img);
   });
-});
+};
 
 // 🔁 Rotate selected item with "R" key
 document.addEventListener('keydown', function (e) {

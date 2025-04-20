@@ -8,12 +8,13 @@
 </head>
 <body>
   <h1>MoaKits 2.5D Room Designer</h1>
+
   <div id="container">
     <div id="sidebar">
       <h3>Furniture</h3>
-      <img src="assets/furniture/bed.png" class="item" data-item="bed" alt="Bed">
-      <img src="assets/furniture/lamp.png" class="item" data-item="lamp" alt="Lamp">
-      <img src="assets/furniture/rug.png" class="item" data-item="rug" alt="Rug">
+      <button onclick="addItemToCanvas('assets/furniture/bed.png')">🛏 Add Bed</button>
+      <button onclick="addItemToCanvas('assets/furniture/lamp.png')">💡 Add Lamp</button>
+      <button onclick="addItemToCanvas('assets/furniture/rug.png')">🧶 Add Rug</button>
     </div>
 
     <div id="canvas-wrapper">
